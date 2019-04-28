@@ -48,8 +48,8 @@ function createMap(earthquakes) {
 
     var myMap = L.map("map", {
         center: [37.8044, -122.2711],
-        zoom: 3,
-        layers: [satellite, earthquakes]
+        zoom: 4,
+        layers: [satellite, darkMap, earthquakes]
     });
 
     // layer control
@@ -58,15 +58,16 @@ function createMap(earthquakes) {
     }).addTo(myMap);
 
     // legend
-    var legend = L.control({ position: 'topleft' });
+    var legend = L.control({ position: 'bottomright' });
     legend.onAdd = function(myMap) {
         var div = L.DomUtil.create('div', 'info legend'),
-            magnitudes = [0, 1, 2, 3, 4, 5];
+            magnitudes = [0, 1, 2, 3, 4, 5],
+            labels = [];
 
         for (var i = 0; i < magnitudes.length; i++) {
             div.innerHTML +=
                 '<i style="background: ' + markerColor(magnitudes[i] + 1) + '"></i> ' +
-                magnitudes[i] + (magnitudes[i + 1] ? '-' + magnitudes[i + 1] + '<br>' : '+');
+                magnitudes[i] + (magnitudes[i + 1] ? '&ndash;' + magnitudes[i + 1] + '<br>' : '+');
         }
         return div;  
     };
@@ -75,15 +76,15 @@ function createMap(earthquakes) {
 
 // marker colors
 function markerColor(x) {
-    return x > 5 ? "#a54500":
-    x > 4 ? "#cc5500":
-    x > 3 ? "#ff6f08":
-    x > 2 ? "#ff9143":
-    x > 1 ? "#ffb37e":
-        "#ffcca5";
+    return x > 5 ? "#cc0000":
+    x > 4 ? "#cc3300":
+    x > 3 ? "#cc6600":
+    x > 2 ? "#cc9900":
+    x > 1 ? "#cccc00":
+        "#ccff00";
 }
 
 // increase marker size for visibility
 function markerRadius(value) {
-    return value*35000
+    return value*12500
 }
